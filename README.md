@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a project on TMC4C123G, with a goal of integrating a IR ranging
+This is a project on TMC4C123G, with a goal of integrating an IR ranging
 sensor. The project is also about building a nice driver and HAL
 interface.
 
