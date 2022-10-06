@@ -1,9 +1,11 @@
 #ifndef HAL_CXX
 #define HAL_CXX
 
-#include <cstdint>
+#include <type_traits>
 
 #include "bsp.h"
+#include "gpiopin.hpp"
+#include "gpioport.hpp"
 
 namespace hal {
     template <class GPIOPort> class GPIO;
@@ -24,14 +26,13 @@ struct hal::GPIO {
     };
     
     struct Interrupt {
-        template <class PinType, class... PinTypes>
-        void enable(PinType pin, PinTypes... pins) {
+        template <class... PinTypes, class = std::common_type_t<GPIOPin, PinTypes...>>
+        void enable(GPIOPin pin, PinTypes... pins) {
             HWREG(GPIOPort::intMaskRegAddr) |= (1U << static_cast<int>(pin));
-            enableInterrupt(pins...);
+            enable(pins...);
         }
         
-        template <class PinType>
-        void enable(PinType pin) {
+        void enable(GPIOPin pin) {
             HWREG(GPIOPort::intMaskRegAddr) |= (1U << static_cast<int>(pin));
             HWREG(GPIOPort::nvicIntEnableRegAddr) |= GPIOPort::nvicIntEnableMask;
         }

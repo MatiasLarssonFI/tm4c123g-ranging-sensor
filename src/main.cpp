@@ -2,8 +2,11 @@
 #include <cstdbool>
 
 #include "bsp.h"
-#include "tm4c_cmsis.h"
+#include "gpiopin.hpp"
+#include "gpioport.hpp"
+#include "hal.hpp"
 #include "i2cmodule.hpp"
+#include "tm4c_cmsis.h"
 
 using I2CModule1 = I2CModule<1U>;
 I2CModule1 i2cModule1{};
@@ -16,7 +19,7 @@ hal::GPIO<GPIOPorts::F>::Interrupt gpioFInterrupt;
 int main() {
     gpioFClock.enable();
     gpioFAHB.enable();
-    gpioFInterrupt.enable(0); // enable interrupt on GPIO port F pin 0
+    gpioFInterrupt.enable(GPIOPin::P0); // enable interrupt on GPIO port F pin 0
     //TBD: configure GPIOIS and GPIOIEV
     // Also, fix it so that GPIOIM is masked (cleared) until the other registers have been configured.
     // Pin 0 is connected to the physical switch, so we use it for test. Later switch
