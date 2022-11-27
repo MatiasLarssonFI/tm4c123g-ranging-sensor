@@ -3,10 +3,11 @@
 
 #include <cstdint>
 
-#include "bsp.h"
 #include "i2cmodulecontroller.hpp"
 #include "i2ctypes.hpp"
-#include "gpioport.hpp"
+
+#include "bsp/bsp.h"
+#include "hal/gpioport.hpp"
 
 
 /*

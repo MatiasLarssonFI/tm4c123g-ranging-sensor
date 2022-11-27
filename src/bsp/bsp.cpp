@@ -5,7 +5,8 @@
 
 #include "bsp.h"
 #include "tm4c_cmsis.h"
-#include "i2cmodule.hpp"
+
+#include "drivers/i2c/i2cmodule.hpp"
 
 extern I2CModule<1> i2cModule1;
 

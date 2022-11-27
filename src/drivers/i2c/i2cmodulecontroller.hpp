@@ -4,9 +4,10 @@
 #include <functional>
 #include <cstdint>
 
-#include "hal.hpp"
 #include "i2cinterruptcontext.hpp"
 #include "i2ctypes.hpp"
+
+#include "hal/hal.hpp"
 
 
 //! I2C module controller

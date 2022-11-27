@@ -2,10 +2,10 @@
 TARGET = ranging_sensor_app
 # MCU: part number to build for
 MCU = TM4C123GH6PM
-# SOURCES: list of input source sources
-SOURCES = ranging_sensor_app.cpp bsp.cpp startup_tm4c_gnu.c
 # INCLUDES: list of includes, by default, use Includes directory
-INCLUDES = -I$(HOME)/embedded/cmsis/Include -I$(HOME)/embedded/include/tm4c
+MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+MAKEFILE_DIR :=  $(dir $(MAKEFILE_PATH))
+INCLUDES = -I$(HOME)/embedded/cmsis/Include -I$(HOME)/embedded/include/tm4c -I$(MAKEFILE_DIR)src
 # OUTDIR: directory to use for output
 OUTDIR = build
 
@@ -31,20 +31,21 @@ CC = arm-none-eabi-gcc
 CXX = arm-none-eabi-g++
 LD = arm-none-eabi-g++
 OBJCOPY = arm-none-eabi-objcopy
-RM      = rm -f
+RM      = rm -rf
 MKDIR	= mkdir -p
 
 
 # list of object files, placed in the build directory regardless of source path
-OBJECTS = $(addprefix $(OUTDIR)/,$(notdir $(patsubst %.cpp,%.o,$(patsubst %.c,%.o,$(SOURCES)))))
+OBJECTS := $(addprefix $(OUTDIR)/,$(notdir $(patsubst %.cpp,%.o,$(patsubst %.c,%.o,$(wildcard src/*.cpp)))))
+OBJECTS := $(OBJECTS) $(addprefix $(OUTDIR)/bsp/,$(notdir $(patsubst %.cpp,%.o,$(patsubst %.c,%.o,$(wildcard src/bsp/*.cpp)))))
 
 # default: build bin
 all: $(OUTDIR)/$(TARGET).bin
 
-$(OUTDIR)/%.o: src/%.c | $(OUTDIR)
+$(OUTDIR)/%.o: src/%.cpp | $(OUTDIR)
 	$(CXX) -o $@ $^ $(CXXFLAGS)
 	
-$(OUTDIR)/%.o: src/%.cpp | $(OUTDIR)
+$(OUTDIR)/bsp/%.o: src/bsp/%.cpp | $(OUTDIR)/bsp
 	$(CXX) -o $@ $^ $(CXXFLAGS)
 
 $(OUTDIR)/ranging_sensor_app.elf: $(OBJECTS)
@@ -56,6 +57,9 @@ $(OUTDIR)/ranging_sensor_app.bin: $(OUTDIR)/ranging_sensor_app.elf
 # create the output directory
 $(OUTDIR):
 	$(MKDIR) $(OUTDIR)
+
+$(OUTDIR)/bsp:
+	$(MKDIR) $(OUTDIR)/bsp
 
 clean:
 	-$(RM) $(OUTDIR)/*

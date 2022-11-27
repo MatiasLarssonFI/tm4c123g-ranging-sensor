@@ -1,12 +1,13 @@
 #include <cstdint>
 #include <cstdbool>
 
-#include "bsp.h"
-#include "gpiopin.hpp"
-#include "gpioport.hpp"
-#include "hal.hpp"
-#include "i2cmodule.hpp"
 #include "tm4c_cmsis.h"
+
+#include "bsp/bsp.h"
+#include "drivers/i2c/i2cmodule.hpp"
+#include "hal/gpiopin.hpp"
+#include "hal/gpioport.hpp"
+#include "hal/hal.hpp"
 
 using I2CModule1 = I2CModule<1U>;
 I2CModule1 i2cModule1{};

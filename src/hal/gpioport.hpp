@@ -3,8 +3,8 @@
 
 #include <cstdint>
 
-#include "bsp.h"
-#include "i2ctypes.hpp"
+#include "bsp/bsp.h"
+#include "drivers/i2c/i2ctypes.hpp" // TODO: move to a generic file
 
 
 /*

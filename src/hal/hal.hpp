@@ -3,9 +3,10 @@
 
 #include <type_traits>
 
-#include "bsp.h"
 #include "gpiopin.hpp"
 #include "gpioport.hpp"
+
+#include "bsp/bsp.h"
 
 namespace hal {
     template <class GPIOPort> class GPIO;
