@@ -20,9 +20,13 @@ hal::GPIO<GPIOPorts::F>::Interrupt gpioFInterrupt;
 int main() {
     gpioFClock.enable();
     gpioFAHB.enable();
-    gpioFInterrupt.enable(GPIOPin::P0); // enable interrupt on GPIO port F pin 0
     //TBD: configure GPIOIS and GPIOIEV
-    // Also, fix it so that GPIOIM is masked (cleared) until the other registers have been configured.
+    // * GPIOIM shall be masked (cleared) until the other registers have been configured.
+    // * trigger on positive level (active high)
+    //     * GPIOIS = 1, GPIOIEV = 1
+    // * see 10.3 Initialization and Configuration from data sheet
+    gpioFInterrupt.enable(GPIOPin::P0); // enable interrupt on GPIO port F pin 0
+    
     // Pin 0 is connected to the physical switch, so we use it for test. Later switch
     // to a pin header.
     //TBD (use some other port than GPIOA perhaps, since it uses APB for I2C)

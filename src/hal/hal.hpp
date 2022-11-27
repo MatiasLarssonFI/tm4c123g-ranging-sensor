@@ -37,6 +37,8 @@ struct hal::GPIO {
             HWREG(GPIOPort::intMaskRegAddr) |= (1U << static_cast<int>(pin));
             HWREG(GPIOPort::nvicIntEnableRegAddr) |= GPIOPort::nvicIntEnableMask;
         }
+        
+        //TBD: GPIOIS, GPIOIEV
     };
 };
 
