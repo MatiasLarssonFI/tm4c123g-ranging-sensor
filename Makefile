@@ -1,9 +1,9 @@
 # TARGET: name of the output file
-TARGET = main
+TARGET = ranging_sensor_app
 # MCU: part number to build for
 MCU = TM4C123GH6PM
 # SOURCES: list of input source sources
-SOURCES = main.cpp bsp.cpp startup_tm4c_gnu.c
+SOURCES = ranging_sensor_app.cpp bsp.cpp startup_tm4c_gnu.c
 # INCLUDES: list of includes, by default, use Includes directory
 INCLUDES = -I$(HOME)/embedded/cmsis/Include -I$(HOME)/embedded/include/tm4c
 # OUTDIR: directory to use for output
@@ -47,10 +47,10 @@ $(OUTDIR)/%.o: src/%.c | $(OUTDIR)
 $(OUTDIR)/%.o: src/%.cpp | $(OUTDIR)
 	$(CXX) -o $@ $^ $(CXXFLAGS)
 
-$(OUTDIR)/a.out: $(OBJECTS)
+$(OUTDIR)/ranging_sensor_app.elf: $(OBJECTS)
 	$(LD) -o $@ $^ $(LDFLAGS)
 
-$(OUTDIR)/main.bin: $(OUTDIR)/a.out
+$(OUTDIR)/ranging_sensor_app.bin: $(OUTDIR)/ranging_sensor_app.elf
 	$(OBJCOPY) -O binary $< $@
 
 # create the output directory
