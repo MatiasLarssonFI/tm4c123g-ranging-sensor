@@ -15,49 +15,55 @@
  */
 
 namespace {
-    enum class GPIOPort { A, B, C, D, E, F };
-};
+    namespace {
+        enum class GPIOPort { A, B, C, D, E, F };
+    };
 
-//! GPIO port
-/*!
- * \tparam GPIOPortID GPIO port ID
- */
-template <GPIOPort Port>
-class GPIOPortImpl {};
-
-
-//! GPIO Port A
-template <>
-class GPIOPortImpl<GPIOPort::A> {
-    public:
-        static constexpr t_register_addr AFSelRegAddr = GPIOAFSEL_PORTA;
-        static constexpr t_register_addr openDrainRegAddr = GPIOODR_PORTA;
-        static constexpr t_register_addr ctlRegAddr = GPIOPCTL_PORTA;
-        static constexpr t_register_addr digitalEnableRegAddr = GPIODEN_PORTA;
-        
-        static constexpr std::uint_fast8_t sysCtlPeripheral = (1U << 0);
-        
-        static constexpr t_register_addr nvicIntEnableRegAddr = GPIOA_NVIC_INT_ENABLE_R;
-        static constexpr std::uint_fast8_t nvicIntEnableMask = (1U << 0); // interrupt 0
-        static constexpr t_register_addr intMaskRegAddr = GPIOIM_PORTA;
-};
+    //! GPIO port
+    /*!
+     * \tparam GPIOPortID GPIO port ID
+     */
+    template <GPIOPort Port>
+    class GPIOPortImpl {};
 
 
-//! GPIO Port F
-template <>
-class GPIOPortImpl<GPIOPort::F> {
-    public:
-        static constexpr t_register_addr AFSelRegAddr = GPIOAFSEL_PORTF;
-        static constexpr t_register_addr openDrainRegAddr = GPIOODR_PORTF;
-        static constexpr t_register_addr ctlRegAddr = GPIOPCTL_PORTF;
-        static constexpr t_register_addr digitalEnableRegAddr = GPIODEN_PORTF;
-        
-        static constexpr std::uint_fast8_t sysCtlPeripheral = (1U << 5);
-        
-        static constexpr t_register_addr nvicIntEnableRegAddr = GPIOF_NVIC_INT_ENABLE_R;
-        static constexpr std::uint_fast8_t nvicIntEnableMask = (1U << 30); // interrupt 30
-        static constexpr t_register_addr intMaskRegAddr = GPIOIM_PORTF;
-};
+    //! GPIO Port A
+    template <>
+    class GPIOPortImpl<GPIOPort::A> {
+        public:
+            static constexpr t_register_addr AFSelRegAddr = GPIOAFSEL_PORTA;
+            static constexpr t_register_addr openDrainRegAddr = GPIOODR_PORTA;
+            static constexpr t_register_addr ctlRegAddr = GPIOPCTL_PORTA;
+            static constexpr t_register_addr digitalEnableRegAddr = GPIODEN_PORTA;
+            
+            static constexpr std::uint_fast8_t sysCtlPeripheral = (1U << 0);
+            
+            static constexpr t_register_addr nvicIntEnableRegAddr = GPIOA_NVIC_INT_ENABLE_R;
+            static constexpr std::uint_fast8_t nvicIntEnableMask = (1U << 0); // interrupt 0
+            static constexpr t_register_addr intMaskRegAddr = GPIOIM_PORTA;
+            static constexpr t_register_addr intSenseRegAddr = GPIOIS_PORTA;
+            static constexpr t_register_addr intEventRegAddr = GPIOIEV_PORTA;
+    };
+
+
+    //! GPIO Port F
+    template <>
+    class GPIOPortImpl<GPIOPort::F> {
+        public:
+            static constexpr t_register_addr AFSelRegAddr = GPIOAFSEL_PORTF;
+            static constexpr t_register_addr openDrainRegAddr = GPIOODR_PORTF;
+            static constexpr t_register_addr ctlRegAddr = GPIOPCTL_PORTF;
+            static constexpr t_register_addr digitalEnableRegAddr = GPIODEN_PORTF;
+            
+            static constexpr std::uint_fast8_t sysCtlPeripheral = (1U << 5);
+            
+            static constexpr t_register_addr nvicIntEnableRegAddr = GPIOF_NVIC_INT_ENABLE_R;
+            static constexpr std::uint_fast8_t nvicIntEnableMask = (1U << 30); // interrupt 30
+            static constexpr t_register_addr intMaskRegAddr = GPIOIM_PORTF;
+            static constexpr t_register_addr intSenseRegAddr = GPIOIS_PORTF;
+            static constexpr t_register_addr intEventRegAddr = GPIOIEV_PORTF;
+    };
+}
 
 namespace GPIOPorts {
     using A = GPIOPortImpl<GPIOPort::A>;

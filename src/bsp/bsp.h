@@ -55,6 +55,12 @@
 // Address of interrupt mask for GPIO port A
 #define GPIOIM_PORTA (BSP_GPIO_PORTA_BASE + 0x410U)
 
+// Address of interrupt sense for GPIO port A
+#define GPIOIS_PORTA (BSP_GPIO_PORTA_BASE + 0x404U)
+
+// Address of interrupt event for GPIO port A
+#define GPIOIEV_PORTA (BSP_GPIO_PORTA_BASE + 0x40CU)
+
 // Address of alternate function select register for GPIO port F
 #define GPIOAFSEL_PORTF (BSP_GPIO_PORTF_BASE + 0x420U)
 
@@ -69,6 +75,12 @@
 
 // Address of interrupt mask for GPIO port F
 #define GPIOIM_PORTF (BSP_GPIO_PORTF_BASE + 0x410U)
+
+// Address of interrupt sense for GPIO port F
+#define GPIOIS_PORTF (BSP_GPIO_PORTF_BASE + 0x404U)
+
+// Address of interrupt event for GPIO port F
+#define GPIOIEV_PORTF (BSP_GPIO_PORTF_BASE + 0x40CU)
 
 // Address of I2C1 NVIC interrupt enable register
 #define I2C1_NVIC_INT_ENABLE_R (0xE000E104) // interrupt 37

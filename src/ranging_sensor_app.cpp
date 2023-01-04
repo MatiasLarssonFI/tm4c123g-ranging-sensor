@@ -20,11 +20,13 @@ hal::GPIO<GPIOPorts::F>::Interrupt gpioFInterrupt;
 int main() {
     gpioFClock.enable();
     gpioFAHB.enable();
-    //TBD: configure GPIOIS and GPIOIEV
-    // * GPIOIM shall be masked (cleared) until the other registers have been configured.
-    // * trigger on positive level (active high)
-    //     * GPIOIS = 1, GPIOIEV = 1
-    // * see 10.3 Initialization and Configuration from data sheet
+    
+    // - GPIOIM must be masked (cleared) until the other registers have been configured.
+    // - trigger on positive level (active high)
+    //     - GPIOIS = 1, GPIOIEV = 1
+    // - see 10.3 Initialization and Configuration from data sheet
+    gpioFInterrupt.configure(GPIOIntConfig::Sense{ GPIOIntConfig::Sense::IS::LEVEL });
+    gpioFInterrupt.configure(GPIOIntConfig::Event{ GPIOIntConfig::Event::IEV::HIGH });
     gpioFInterrupt.enable(GPIOPin::P0); // enable interrupt on GPIO port F pin 0
     
     // Pin 0 is connected to the physical switch, so we use it for test. Later switch
@@ -33,6 +35,7 @@ int main() {
     //GPIOA_HS->DIR &= ~(DATA_READY_PIN); // set 'data ready' pin as input
     //GPIOA_HS->DEN |= DATA_READY_PIN; // digital enable
     
+    //TBD: use the hal for this, or remove if leds not needed
     GPIOF_HS->DIR |= (LED_RED | LED_BLUE | LED_GREEN); // set led pins as outputs
     GPIOF_HS->DEN |= (LED_RED | LED_BLUE | LED_GREEN); // digital enable
     
