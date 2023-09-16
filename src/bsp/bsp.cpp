@@ -7,6 +7,7 @@
 #include "tm4c_cmsis.h"
 
 #include "drivers/i2c/i2cmodule.hpp"
+#include "hal/gpioport.hpp"
 
 extern I2CModule<1> i2cModule1;
 
@@ -19,5 +20,9 @@ __attribute__ ((naked)) void assert_failed (char const *file, int line) {
 
 void I2C1_IRQHandler(void) {
     i2cModule1.interrupt();
+}
+
+void GPIOPortF_IRQHandler(void) {
+    GPIOPorts::F::t_cntl::instance().interrupt();
 }
 }

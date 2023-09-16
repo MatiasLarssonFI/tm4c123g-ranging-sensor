@@ -28,6 +28,8 @@ struct hal::GPIO {
     };
     
     struct Interrupt {
+        using t_callback = GPIOPort::t_cntl::t_int_callback;
+        
         // GPIOIS
         void configure(GPIOIntConfig::Sense s) {
             HWREG(GPIOPort::intSenseRegAddr) |= static_cast<int>(s.is);
@@ -40,15 +42,16 @@ struct hal::GPIO {
         
         // GPIOIM
         template <class... PinTypes, class = std::common_type_t<GPIOPin, PinTypes...>>
-        void enable(GPIOPin pin, PinTypes... pins) {
+        void enable(t_callback cb, GPIOPin pin, PinTypes... pins) {
             HWREG(GPIOPort::intMaskRegAddr) |= (1U << static_cast<int>(pin));
-            enable(pins...);
+            enable(std::move(cb), pins...);
         }
         
-        // GPIOIM and NVIC interrupt enable
-        void enable(GPIOPin pin) {
+        // GPIOIM and NVIC interrupt enable, and user callback setup
+        void enable(t_callback cb, GPIOPin pin) {
             HWREG(GPIOPort::intMaskRegAddr) |= (1U << static_cast<int>(pin));
             HWREG(GPIOPort::nvicIntEnableRegAddr) |= GPIOPort::nvicIntEnableMask;
+            GPIOPort::t_cntl::instance().enableInterrupt(std::move(cb));
         }
     };
 };

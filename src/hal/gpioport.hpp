@@ -5,7 +5,7 @@
 
 #include "bsp/bsp.h"
 #include "drivers/i2c/i2ctypes.hpp" // TODO: move to a generic file
-
+#include "gpioportcontroller.hpp"
 
 /*
  * GPIO ports
@@ -15,10 +15,8 @@
  */
 
 namespace {
-    namespace {
-        enum class GPIOPort { A, B, C, D, E, F };
-    };
-
+    enum class GPIOPort { A, B, C, D, E, F };
+    
     //! GPIO port
     /*!
      * \tparam GPIOPortID GPIO port ID
@@ -31,6 +29,9 @@ namespace {
     template <>
     class GPIOPortImpl<GPIOPort::A> {
         public:
+            static constexpr GPIOPort port = GPIOPort::A;
+            using t_cntl = GPIOPortController<GPIOPortImpl<port>>;
+        
             static constexpr t_register_addr AFSelRegAddr = GPIOAFSEL_PORTA;
             static constexpr t_register_addr openDrainRegAddr = GPIOODR_PORTA;
             static constexpr t_register_addr ctlRegAddr = GPIOPCTL_PORTA;
@@ -50,6 +51,9 @@ namespace {
     template <>
     class GPIOPortImpl<GPIOPort::F> {
         public:
+            static constexpr GPIOPort port = GPIOPort::F;
+            using t_cntl = GPIOPortController<GPIOPortImpl<port>>;
+            
             static constexpr t_register_addr AFSelRegAddr = GPIOAFSEL_PORTF;
             static constexpr t_register_addr openDrainRegAddr = GPIOODR_PORTF;
             static constexpr t_register_addr ctlRegAddr = GPIOPCTL_PORTF;
