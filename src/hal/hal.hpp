@@ -30,12 +30,12 @@ struct hal::GPIO {
     struct Interrupt {
         // GPIOIS
         void configure(GPIOIntConfig::Sense s) {
-            HWREG(GPIOPort::intSenseRegAddr) |= static_cast<int>(s.is));
+            HWREG(GPIOPort::intSenseRegAddr) |= static_cast<int>(s.is);
         }
         
         // GPIOIEV
         void configure(GPIOIntConfig::Event e) {
-            HWREG(GPIOPort::intEventRegAddr) |= static_cast<int>(e.iev));
+            HWREG(GPIOPort::intEventRegAddr) |= static_cast<int>(e.iev);
         }
         
         // GPIOIM

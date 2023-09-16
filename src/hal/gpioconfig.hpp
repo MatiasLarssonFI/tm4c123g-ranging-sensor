@@ -16,13 +16,13 @@ namespace {
     struct GPIOIntSenseImpl {
         enum class IS { EDGE, LEVEL };
         IS is;
-    }
+    };
 
 
     struct GPIOIntEventImpl {
         enum class IEV { LOW, HIGH };
         IEV iev;
-    }
+    };
 }
 
 namespace GPIOIntConfig {

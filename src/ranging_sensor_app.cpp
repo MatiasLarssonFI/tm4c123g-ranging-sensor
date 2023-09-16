@@ -21,6 +21,7 @@ int main() {
     gpioFClock.enable();
     gpioFAHB.enable();
     
+    // Some notes below.
     // - GPIOIM must be masked (cleared) until the other registers have been configured.
     // - trigger on positive level (active high)
     //     - GPIOIS = 1, GPIOIEV = 1
@@ -31,15 +32,14 @@ int main() {
     
     // Pin 0 is connected to the physical switch, so we use it for test. Later switch
     // to a pin header.
-    //TBD (use some other port than GPIOA perhaps, since it uses APB for I2C)
+    // TBD (use some other port than GPIOA perhaps, since it uses APB for I2C)
+    // Also, use the hal for this.
     //GPIOA_HS->DIR &= ~(DATA_READY_PIN); // set 'data ready' pin as input
     //GPIOA_HS->DEN |= DATA_READY_PIN; // digital enable
     
     //TBD: use the hal for this, or remove if leds not needed
     GPIOF_HS->DIR |= (LED_RED | LED_BLUE | LED_GREEN); // set led pins as outputs
     GPIOF_HS->DEN |= (LED_RED | LED_BLUE | LED_GREEN); // digital enable
-    
-    
     
     while (1)
         ;
